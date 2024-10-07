@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="src/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sedan:ital@0;1&display=swap" rel="stylesheet">
+  <title>Weather App</title>
+</head>
+<body>
+    <div class="weatherapp">
+      <form class="search-box" id="search-box">
+        <input type="search" placeholder="Enter a city..." required id="search-box-input" class="search-box-input">
+        <input type="submit" value="Search" class="search-box-submit">
+      </form>
+   
+    
+     <main>
+        <div class="weather-info">
+            <h1 class="weather-info-city" id="city"></h1>
+            <p class="weather-info-temp" id="weather-info-temp">30 
+               <span id="weather-emoji">  </span> </p>  
+               
+            <p class="weather-info-details"> 
+                <span id="time"> </span> , 
+                <span id="description"></span>
+            </p> 
+
+            <p>Humidity:<strong id="humidity"> </strong></p>
+            
+            
+        </div>
+
+        <div class="weather-forecast-container" id="forecast"></div>
+
+     </main>
+
+
+    <footer> Designed by 
+        <a href="https://github.com/zz-giraffe">RR</a> 
+        hosted on<a href="https://github.com/zz-giraffe/Vanilla_Weather_ZZ">Github</a>
+        and website hosted on <a href="https://myweatherapprr.netlify.app">Netlify</a> 
+    </footer>
+  </div>
+
+    <script src="src/index.js"></script>
+</body>
+</html>
