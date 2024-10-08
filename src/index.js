@@ -5,6 +5,7 @@ function displayWeather(response) {
     let humidityElement = document.querySelector("#humidity");
     let timeElement = document.querySelector("#time");
     let date = new Date(response.data.time * 1000);
+    let iconElement = document.querySelector("#icon");
     console.log(response.data);
 
 
@@ -13,6 +14,9 @@ function displayWeather(response) {
     descriptionElement.innerHTML = response.data.condition.description;
     humidityElement.innerHTML = response.data.temperature.humidity + "%";
     timeElement.innerHTML = formatDate(date);
+    iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class= "forecast-icon" />`;
+
+    getForecast(response.data.city);
    
 }
 
@@ -35,7 +39,7 @@ function searchCity(city) {
     let apiKey = "94d121f098445o8atf8a44f43b39f729";
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
     axios.get(apiUrl).then(displayWeather);
-  }
+}
   
 
 function handleSearchSubmit(event) {
@@ -45,22 +49,39 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-function displayForecast(){
+function formatDay(timestamp){
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun","Mon","Tue","Wed","Thu", "Fri","Sat"];
 
-  let days = ["Tue","Wed","Thu","Fri","Sat"];
+  return days[date.getDay()];
+}
+
+function getForecast(city){
+  let apiKey = "94d121f098445o8atf8a44f43b39f729";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
+
+
+function displayForecast(response){
+
   let forecastHtml = "";
 
-  days.forEach(function(day){
-    forecastHtml = 
-      forecastHtml + 
-      `
-      <div class="forecast-day">
-        <div class="forecast-date">${day}</div>
-        <div class="forecast-icon">🌞⛅️ </div>
-        <div class="forecast-temp">8-30°C</div>
-      </div>
-      
-      `;
+  response.data.daily.forEach(function(day, index){
+    if (index < 5) {
+      forecastHtml =
+         forecastHtml +
+         `
+         <div class="forecast-day">
+           <div class="forecast-date">${formatDay(day.time)}</div>
+           <img src="${day.condition.icon_url}" class="forecast-icon" />
+           <div class="forecast-temp">${Math.round(day.temperature.minimum)}°C - ${Math.round(day.temperature.maximum)}°C </div>
+         </div>
+         
+         
+         `;
+    } 
 
   });
 
@@ -72,7 +93,9 @@ let searchFormElement = document.querySelector("#search-box");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Singapore");
-displayForecast();
+
+
+
 
 
 
